@@ -1,2 +1,5 @@
 <?php
+
+$debugger ="step";
+
 phpinfo();

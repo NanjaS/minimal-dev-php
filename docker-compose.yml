@@ -33,7 +33,8 @@ services:
 #    depends_on:
 #      - mariadb
     ports:
-      - "9003:9003"
+      - "9000"
+      - "9003" #Xdebug3
     volumes:
       - .:/srv/app
     env_file: .env
@@ -52,8 +53,8 @@ services:
 #    networks:
 #      - app-net
 #    env_file: .env
-
-  smtp:
-    image: mailhog/mailhog
-    ports:
-      - 8025:8025
+#
+#  smtp:
+#    image: mailhog/mailhog
+#    ports:
+#      - 8025:8026
