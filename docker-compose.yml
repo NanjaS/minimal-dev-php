@@ -5,6 +5,7 @@ networks:
 volumes:
   app-data:
   app-redis:
+  app-caddy:
 
 
 services:
@@ -12,8 +13,26 @@ services:
   # Nginx - php-fpm versions
   # ------------------------
 
+  caddy:
+    image: caddy
+    volumes:
+      - ./.docker/caddy/Caddyfile:/etc/caddy/Caddyfile
+      - ./public:/srv/app/public
+#      - app-caddy:/data
+#      - app-caddy:/config
+#    user: ${UID}
+    ports:
+      - "8100:80"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.caddy.rule=Host(`caddy.minimal.localhost`)"
+      #- "traefik.http.routers.caddy.rule=Host(`db.minimal.localhost`) && PathPrefix(`/api`)"
   # debug nginx: docker run -d <image-name> "nginx-debug" "-g" "daemon off;"
+    networks:
+      - proxy
+
   nginx:
+    image: nginx
     build:
       context: .
       dockerfile: .docker/nginx/Dockerfile
@@ -39,7 +58,7 @@ services:
       dockerfile: .docker/php/Dockerfile
     user: ${UID}
     depends_on:
-      - mariadb
+#      - mariadb
       - traefik
     ports:
       - "9000"
@@ -54,25 +73,25 @@ services:
   # ------------------------
   # Databases
   # ------------------------
-  mariadb:
-    image: mariadb:10.5
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    ports:
-      - "13306:3306"
-    labels:
-      - "traefik.enable=true"
-      # "db.minimal.localhost" does not work -> catchall needs to be provided
-      - "traefik.tcp.routers.mariadb.rule=HostSNI(`*`)"
-      - "traefik.tcp.routers.mariadb.entrypoints=mysqlep"
-      - "traefik.tcp.routers.mariadb.service=mariadb"
-      - "traefik.tcp.services.mariadb.loadbalancer.server.port=3306"
-    environment:
-      - MYSQL_DATABASE=demo
-      - MYSQL_ROOT_PASSWORD=password
-    networks:
-      - app-net
-      - proxy
-    env_file: .env
+#  mariadb:
+#    image: mariadb:10.5
+#    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+#    ports:
+#      - "13306:3306"
+#    labels:
+#      - "traefik.enable=true"
+#      # "db.minimal.localhost" does not work -> catchall needs to be provided
+#      - "traefik.tcp.routers.mariadb.rule=HostSNI(`*`)"
+#      - "traefik.tcp.routers.mariadb.entrypoints=mysqlep"
+#      - "traefik.tcp.routers.mariadb.service=mariadb"
+#      - "traefik.tcp.services.mariadb.loadbalancer.server.port=3306"
+#    environment:
+#      - MYSQL_DATABASE=demo
+#      - MYSQL_ROOT_PASSWORD=password
+#    networks:
+#      - app-net
+#      - proxy
+#    env_file: .env
 
   smtp:
     image: mailhog/mailhog
@@ -82,7 +101,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.smtp.rule=Host(`mail.minimal.localhost`)"
       - "traefik.http.services.smtp.loadbalancer.server.port=8025"
-      - traefik.port=8025
+#      - traefik.port=8025
     depends_on:
       - traefik
     networks:
@@ -101,43 +120,43 @@ services:
 #    networks:
 #      - proxy
 
-  redis:
-    image: redis
-#    ports:
-#      - "6379:6379"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.tcp.routers.redis.rule=HostSNI(`*`)"
-      - "traefik.tcp.routers.redis.entrypoints=redisep"
-      - "traefik.tcp.routers.redis.service=redis"
-      - "traefik.tcp.services.redis.loadbalancer.server.port=6379"
-    command: redis-server --save 20 1 --loglevel warning --requirepass ${REDIS_PASS}
-      #--requirepass ${REDIS_PASS}
-    # --save 20 1 which instructs the server to save 1 or more writes every 20 seconds to disk in case the server restarts
-    volumes:
-      - app-redis:/data
-    networks:
-      - app-net
-    env_file:
-      - .env
+#  redis:
+#    image: redis
+##    ports:
+##      - "6379:6379"
+#    labels:
+#      - "traefik.enable=true"
+#      - "traefik.tcp.routers.redis.rule=HostSNI(`*`)"
+#      - "traefik.tcp.routers.redis.entrypoints=redisep"
+#      - "traefik.tcp.routers.redis.service=redis"
+#      - "traefik.tcp.services.redis.loadbalancer.server.port=6379"
+#    command: redis-server --save 20 1 --loglevel warning --requirepass ${REDIS_PASS}
+#      #--requirepass ${REDIS_PASS}
+#    # --save 20 1 which instructs the server to save 1 or more writes every 20 seconds to disk in case the server restarts
+#    volumes:
+#      - app-redis:/data
+#    networks:
+#      - app-net
+#    env_file:
+#      - .env
 
   traefik:
     image: traefik:v2.9
     command:
-      - --api.insecure=true
-      - --providers.docker
-      - --providers.docker.exposedByDefault=false
-      - --log.level=DEBUG
-      - --log.filePath=/logs/traefik.log
+      - "--api.insecure=true"
+      - "--providers.docker"
+      - "--providers.docker.exposedByDefault=false"
+      - "--log.level=DEBUG"
+      - "--log.filePath=/logs/traefik.log"
       # Additional Entry points
-      - --entrypoints.mysqlep.address=:3306
-      - --entrypoints.redisep.address=:6379
+#      - --entrypoints.mysqlep.address=:3306
+#      - --entrypoints.redisep.address=:6379
     ports:
       - "80:80"
       - "443:443"
       - "8080:8080"
-      - "3306:3306"
-      - "6379:6379"
+#      - "3306:3306"
+#      - "6379:6379"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./logs/:/logs/
