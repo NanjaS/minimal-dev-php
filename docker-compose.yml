@@ -82,25 +82,24 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.smtp.rule=Host(`mail.minimal.localhost`)"
       - "traefik.http.services.smtp.loadbalancer.server.port=8025"
-      - "traefik.docker.network=minimal-dev_proxy"
-#      - "traefik.port=8025"
+      - traefik.port=8025
     depends_on:
       - traefik
     networks:
       - proxy
-
-  redisInsights:
-    image: redislabs/redisinsight:latest
-#    ports:
-#      - "8001:8001"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.redisInsights.rule=Host(`redisInsights.minimal.localhost`)"
-      - "traefik.http.services.redisInsights.loadbalancer.server.port=8001"
-    depends_on:
-      - traefik
-    networks:
-      - proxy
+#
+#  redisInsights:
+#    image: redislabs/redisinsight:latest
+##    ports:
+##      - "8001:8001"
+#    labels:
+#      - "traefik.enable=true"
+#      - "traefik.http.routers.redisInsights.rule=Host(`redisInsights.minimal.localhost`)"
+#      - "traefik.http.services.redisInsights.loadbalancer.server.port=8001"
+#    depends_on:
+#      - traefik
+#    networks:
+#      - proxy
 
   redis:
     image: redis
@@ -108,10 +107,10 @@ services:
 #      - "6379:6379"
     labels:
       - "traefik.enable=true"
-      - "traefik.tcp.routers.mariadb.rule=HostSNI(`*`)"
-      - "traefik.tcp.routers.mariadb.entrypoints=redisep"
-      - "traefik.tcp.routers.mariadb.service=mariadb"
-      - "traefik.tcp.services.mariadb.loadbalancer.server.port=6379"
+      - "traefik.tcp.routers.redis.rule=HostSNI(`*`)"
+      - "traefik.tcp.routers.redis.entrypoints=redisep"
+      - "traefik.tcp.routers.redis.service=redis"
+      - "traefik.tcp.services.redis.loadbalancer.server.port=6379"
     command: redis-server --save 20 1 --loglevel warning --requirepass ${REDIS_PASS}
       #--requirepass ${REDIS_PASS}
     # --save 20 1 which instructs the server to save 1 or more writes every 20 seconds to disk in case the server restarts
@@ -141,6 +140,6 @@ services:
       - "6379:6379"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./logs/:/logs/:ro
+      - ./logs/:/logs/
     networks:
       - proxy
