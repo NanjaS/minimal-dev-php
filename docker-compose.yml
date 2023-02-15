@@ -1,8 +1,10 @@
-version: "3.5"
+version: "3.7"
 networks:
   app-net:
+  proxy:
 volumes:
   app-data:
+  app-redis:
 
 
 services:
@@ -15,12 +17,19 @@ services:
     build:
       context: .
       dockerfile: .docker/nginx/Dockerfile
-    networks:
-      - app-net
     ports:
       - "8099:80"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nginx.rule=Host(`app.minimal.localhost`)"
+      #- "traefik.http.routers.nginx.rule=Host(`db.minimal.localhost`) && PathPrefix(`/api`)"
+    depends_on:
+      - traefik
     volumes:
       - ./public:/srv/app/public
+    networks:
+      - app-net
+      - proxy
 
   php:
     build:
@@ -28,33 +37,110 @@ services:
         - PHP_VERSION=${PHP_VERSION}
       context: .
       dockerfile: .docker/php/Dockerfile
-    networks:
-      - app-net
-#    depends_on:
-#      - mariadb
+    user: ${UID}
+    depends_on:
+      - mariadb
+      - traefik
     ports:
       - "9000"
       - "9003" #Xdebug3
     volumes:
       - .:/srv/app
+    networks:
+      - app-net
+      - proxy
     env_file: .env
 
   # ------------------------
   # Databases
   # ------------------------
-#  mariadb:
-#    image: mariadb:10.5
-#    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+  mariadb:
+    image: mariadb:10.5
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
+      - "13306:3306"
+    labels:
+      - "traefik.enable=true"
+      # "db.minimal.localhost" does not work -> catchall needs to be provided
+      - "traefik.tcp.routers.mariadb.rule=HostSNI(`*`)"
+      - "traefik.tcp.routers.mariadb.entrypoints=mysqlep"
+      - "traefik.tcp.routers.mariadb.service=mariadb"
+      - "traefik.tcp.services.mariadb.loadbalancer.server.port=3306"
+    environment:
+      - MYSQL_DATABASE=demo
+      - MYSQL_ROOT_PASSWORD=password
+    networks:
+      - app-net
+      - proxy
+    env_file: .env
+
+  smtp:
+    image: mailhog/mailhog
 #    ports:
-#      - "13306:3306"
-#    environment:
-#      - MYSQL_DATABASE=demo
-#      - MYSQL_ROOT_PASSWORD=password
-#    networks:
-#      - app-net
-#    env_file: .env
-#
-#  smtp:
-#    image: mailhog/mailhog
+#      - "8025:8025"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.smtp.rule=Host(`mail.minimal.localhost`)"
+      - "traefik.http.services.smtp.loadbalancer.server.port=8025"
+      - "traefik.docker.network=minimal-dev_proxy"
+#      - "traefik.port=8025"
+    depends_on:
+      - traefik
+    networks:
+      - proxy
+
+  redisInsights:
+    image: redislabs/redisinsight:latest
 #    ports:
-#      - 8025:8026
+#      - "8001:8001"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.redisInsights.rule=Host(`redisInsights.minimal.localhost`)"
+      - "traefik.http.services.redisInsights.loadbalancer.server.port=8001"
+    depends_on:
+      - traefik
+    networks:
+      - proxy
+
+  redis:
+    image: redis
+#    ports:
+#      - "6379:6379"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.tcp.routers.mariadb.rule=HostSNI(`*`)"
+      - "traefik.tcp.routers.mariadb.entrypoints=redisep"
+      - "traefik.tcp.routers.mariadb.service=mariadb"
+      - "traefik.tcp.services.mariadb.loadbalancer.server.port=6379"
+    command: redis-server --save 20 1 --loglevel warning --requirepass ${REDIS_PASS}
+      #--requirepass ${REDIS_PASS}
+    # --save 20 1 which instructs the server to save 1 or more writes every 20 seconds to disk in case the server restarts
+    volumes:
+      - app-redis:/data
+    networks:
+      - app-net
+    env_file:
+      - .env
+
+  traefik:
+    image: traefik:v2.9
+    command:
+      - --api.insecure=true
+      - --providers.docker
+      - --providers.docker.exposedByDefault=false
+      - --log.level=DEBUG
+      - --log.filePath=/logs/traefik.log
+      # Additional Entry points
+      - --entrypoints.mysqlep.address=:3306
+      - --entrypoints.redisep.address=:6379
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+      - "3306:3306"
+      - "6379:6379"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./logs/:/logs/:ro
+    networks:
+      - proxy
