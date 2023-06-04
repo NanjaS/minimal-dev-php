@@ -1,4 +1,4 @@
-FROM nginx:1.21
+FROM nginx:1.25
 
 LABEL maintainer="Markus Liechti"
 
