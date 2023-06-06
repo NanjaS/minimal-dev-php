@@ -9,6 +9,9 @@
 .docker/traefik/config/*
 !.docker/traefik/config/certificates.yaml
 
+tmp/*
+!tmp/debug/.gitignore
+
 
 # ------------------
 # Created by https://www.toptal.com/developers/gitignore/api/phpstorm

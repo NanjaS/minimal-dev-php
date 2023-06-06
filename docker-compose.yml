@@ -46,7 +46,6 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.nginx.rule=Host(`nx.minimal.localhost`)"
-      #- "traefik.http.routers.nginx.rule=Host(`db.minimal.localhost`) && PathPrefix(`/api`)"
     depends_on:
       - traefik
     volumes:
@@ -62,8 +61,13 @@ services:
       context: .
       dockerfile: .docker/php/Dockerfile
     user: "${UID}:${GID}"
+    environment:
+      XDEBUG_MODE: ${XDEBUG_MODE}
+      XDEBUG_CLIENT_HOST: ${XDEBUG_CLIENT_HOST}
     extra_hosts:
-      - "host.docker.internal:host-gateway"
+#      - "host.docker.internal:host-gateway"
+      # host-gateway does not work on Linux with Traefik managing docker.sock
+      - "host.docker.internal:172.20.0.1"
     depends_on:
       - mariadb
       - traefik
@@ -72,10 +76,28 @@ services:
       - "9003" #Xdebug3
     volumes:
       - .:/srv/app
+      - ./tmp/debug:/tmp/xdebug
+      - ./logs:/logs
     networks:
       - app-net
       - proxy
     env_file: .env
+
+  webgrind:
+    image: devgeniem/webgrind
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.caddy-insecure.entrypoints=web"
+#      - "traefik.docker.network=traefik_proxy"
+      - "traefik.http.routers.debug.rule=Host(`debug.minimal.localhost`)"
+#      - "traefik.http.routers.debug.tls=true"
+    networks:
+      - app-net
+      - proxy
+    ports:
+      - "8222:80"
+    volumes:
+      - ./tmp/debug:/tmp/xdebug
 
   # ------------------------
   # Databases
@@ -88,12 +110,10 @@ services:
     labels:
       - "traefik.enable=true"
       # Routers
-      - "traefik.http.routers.mariadb.rule=Host(`db.minimal.localhost`)"
-#      - "traefik.http.routers.mariadb.rule=Host(`*`)"
-#      - "traefik.tcp.routers.mariadb.entryPoints=mysqlep"
-      - "traefik.tcp.routers.mariadb.service=mariadb"
+      - "traefik.tcp.routers.mariadb.rule=HostSNI(`*`)"       # Support for "no TLS" connections
+      - "traefik.tcp.routers.mariadb.entrypoints=mysql"
       # Service (TCP)
-      - "traefik.tcp.services.mariadb.loadbalancer.server.port=3306"
+      - "traefik.tcp.services.mysql.loadbalancer.server.port=3306"
     environment:
       - MYSQL_DATABASE=demo
       - MYSQL_ROOT_PASSWORD=password
@@ -107,7 +127,7 @@ services:
     labels:
       - "traefik.enable=true"
       # Router
-      - "traefik.tcp.routers.mariadb.service=web"
+#      - "traefik.tcp.routers.mariadb.service=web"
       - "traefik.http.routers.smtp.rule=Host(`mail.minimal.localhost`)"
       # Service
       - "traefik.http.services.smtp.loadbalancer.server.port=8025" # forward traffic to port 8025
@@ -164,6 +184,11 @@ services:
 
   traefik:
     image: traefik:v2.10
+    labels:
+      # Dashboard
+      - "traefik.http.routers.api.rule=Host(`traefik.minimal.localhost`)"
+      - "traefik.http.routers.api.service=api@internal"
+#      - "traefik.http.routers.api.middlewares=auth"
     command:
       # Use Traeffik's dynamic configuration
       - "--api.insecure=true"
@@ -175,7 +200,7 @@ services:
       # Additional Entry points
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
-      - "--entrypoints.mariadb.address=:3306"
+      - "--entrypoints.mysql.address=:3306"
 #      - "--entrypoints.redisep.address=:6379"
       # ----------------------------
       # Configure TLS
@@ -191,19 +216,12 @@ services:
       - "80:80"     # HTTP
       - "443:443"   # HTTPS
       - "8080:8080" # Mailhog
-      - "3306:3306" # Mysql
+      - "3306:3306" # Mysql/Mariadb
       - "6379:6379" # # Redis
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock     # Manage Docker
+      - /var/run/docker.sock:/var/run/docker.sock:ro  # Manage Docker
       - ./logs/:/logs/                                # Map logs
       - .docker/traefik/cert/:/cert/                  # Map dev certs
       - .docker/traefik/config/:/configuration/       # Map config (user for certs)
     networks:
       - proxy
-  whoami:
-    image: traefik/whoami:v1.7.1
-    labels:
-      - "traefik.http.routers.whoami.rule=Host(`whoami.minimal.localhost`)"
-      - "traefik.http.middlewares.whoami.redirectscheme.scheme=https"
-      - "traefik.http.middlewares.whoami.redirectscheme.permanent=true"
-      - "traefik.http.routers.whoami.tls=true"
