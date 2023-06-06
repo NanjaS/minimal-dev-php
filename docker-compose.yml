@@ -21,13 +21,18 @@ services:
 #      - app-caddy:/data
 #      - app-caddy:/config
 #    user: ${UID}
-    ports:
-      - "8100:80"
     labels:
       - "traefik.enable=true"
+      - "traefik.http.routers.caddy.entrypoints=websecure"
       - "traefik.http.routers.caddy.rule=Host(`caddy.minimal.localhost`)"
-      #- "traefik.http.routers.caddy.rule=Host(`db.minimal.localhost`) && PathPrefix(`/api`)"
-  # debug nginx: docker run -d <image-name> "nginx-debug" "-g" "daemon off;"
+      - "traefik.http.routers.caddy.tls=true"                                         # TLS termination
+      # Middlewares
+      - "traefik.http.middlewares.force-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.force-https.redirectscheme.permanent=true"
+      # Enable redirect from http to https
+      - "traefik.http.routers.caddy-insecure.entrypoints=web"
+      - "traefik.http.routers.caddy-insecure.rule=Host(`caddy.minimal.localhost`)"
+      - "traefik.http.routers.caddy-insecure.middlewares=force-https"
     networks:
       - proxy
 
@@ -40,7 +45,7 @@ services:
       - "8099:80"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.nginx.rule=Host(`app.minimal.localhost`)"
+      - "traefik.http.routers.nginx.rule=Host(`nx.minimal.localhost`)"
       #- "traefik.http.routers.nginx.rule=Host(`db.minimal.localhost`) && PathPrefix(`/api`)"
     depends_on:
       - traefik
@@ -82,9 +87,12 @@ services:
       - "13306:3306"
     labels:
       - "traefik.enable=true"
-      # "db.minimal.localhost" does not work -> catchall needs to be provided
-      - "traefik.http.routers.mariadb.rule=Host(`db.${DOMAIN_NAME}`)"
-#      - "traefik.tcp.routers.mariadb.service=mariadb"
+      # Routers
+      - "traefik.http.routers.mariadb.rule=Host(`db.minimal.localhost`)"
+#      - "traefik.http.routers.mariadb.rule=Host(`*`)"
+#      - "traefik.tcp.routers.mariadb.entryPoints=mysqlep"
+      - "traefik.tcp.routers.mariadb.service=mariadb"
+      # Service (TCP)
       - "traefik.tcp.services.mariadb.loadbalancer.server.port=3306"
     environment:
       - MYSQL_DATABASE=demo
@@ -98,9 +106,11 @@ services:
     image: mailhog/mailhog
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.smtp.rule=Host(`mail.minimal.localhost`)"
-      - "traefik.http.services.smtp.loadbalancer.server.port=8025"
+      # Router
       - "traefik.tcp.routers.mariadb.service=web"
+      - "traefik.http.routers.smtp.rule=Host(`mail.minimal.localhost`)"
+      # Service
+      - "traefik.http.services.smtp.loadbalancer.server.port=8025" # forward traffic to port 8025
     depends_on:
       - traefik
     networks:
@@ -139,27 +149,61 @@ services:
 #    env_file:
 #      - .env
 
-  traefik:
-    image: traefik:v2.9
+  # Responsible service for creating and updating automatically the SSL certificates
+  minion-cert:
+    build:
+      context: .
+      dockerfile: .docker/minion-cert/Dockerfile
+    user: "${UID}:${GID}"
+    volumes:
+      - .docker/traefik/cert/:/traefik/cert/              # Map dev cert folder for creation
+      - .docker/traefik/config/:/traefik/config/          # Map conf folder for seting up the initial config
     command:
+#      - "sh -c 'chmod ug+x certificates.sh'"
+      - "./certificates.sh"
+
+  traefik:
+    image: traefik:v2.10
+    command:
+      # Use Traeffik's dynamic configuration
       - "--api.insecure=true"
       - "--providers.docker"
       - "--providers.docker.exposedByDefault=false"
       - "--log.level=DEBUG"
       - "--log.filePath=/logs/traefik.log"
+      # ----------------------------
       # Additional Entry points
       - "--entrypoints.web.address=:80"
-      - "--entrypoints.web-secure.address=:443"
-      - "--entrypoints.mysqlep.address=:3306"
-#      - --entrypoints.redisep.address=:6379
+      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.mariadb.address=:3306"
+#      - "--entrypoints.redisep.address=:6379"
+      # ----------------------------
+      # Configure TLS
+      - "--providers.file.directory=/configuration/"
+      - "--providers.file.watch=true"
+      # ----------------------------
+      # For dynamic / automatic Certificate management
+      # https://traefik.io/blog/traefik-2-tls-101-23b4fbee81f1/
+    depends_on:
+      minion-cert:
+        condition: service_completed_successfully # Guarantees the Traefik config and certificates were created
     ports:
-      - "80:80"
-      - "443:443"
-      - "8080:8080"
-      - "3306:3306"
-#      - "6379:6379"
+      - "80:80"     # HTTP
+      - "443:443"   # HTTPS
+      - "8080:8080" # Mailhog
+      - "3306:3306" # Mysql
+      - "6379:6379" # # Redis
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./logs/:/logs/
+      - /var/run/docker.sock:/var/run/docker.sock     # Manage Docker
+      - ./logs/:/logs/                                # Map logs
+      - .docker/traefik/cert/:/cert/                  # Map dev certs
+      - .docker/traefik/config/:/configuration/       # Map config (user for certs)
     networks:
       - proxy
+  whoami:
+    image: traefik/whoami:v1.7.1
+    labels:
+      - "traefik.http.routers.whoami.rule=Host(`whoami.minimal.localhost`)"
+      - "traefik.http.middlewares.whoami.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.whoami.redirectscheme.permanent=true"
+      - "traefik.http.routers.whoami.tls=true"
