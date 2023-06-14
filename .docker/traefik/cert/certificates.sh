@@ -42,6 +42,8 @@ if [ ! -f "${root}.crt" ]; then
     -addext "subjectKeyIdentifier = hash"
   echo "No ${root}.crt is not provided or does not exist. A new local ${root}.crt is created.";
 fi
+# Copy rootCa.crt to /traefik/install for easy installation
+cp "${root}.crt" /traefik/install/"${root}.crt"
 
 # create our key and certificate signing request
 if [ ! -f "${base}.key" ]; then

@@ -1,6 +1,5 @@
 .env
 /vendor
-/logs
 .docker/traefik/cert/*
 !.docker/traefik/cert/.gitignore
 !.docker/traefik/cert/certificates.sh
@@ -10,8 +9,13 @@
 !.docker/traefik/config/certificates.yaml
 
 tmp/*
-!tmp/debug/.gitignore
-
+!tmp/.gitignore
+.logs/*
+!logs/.gitignore
+.install/*
+!.install/.gitignore
+.profiler/*
+!.profiler/.gitignore
 
 # ------------------
 # Created by https://www.toptal.com/developers/gitignore/api/phpstorm
