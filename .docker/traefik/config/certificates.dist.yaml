@@ -1,0 +1,20 @@
+# Dynamic configuration
+# In Traefik container: /configuration/certificates.yaml
+tls:
+
+  # Add Domain specific certificates
+  certificates:
+    # first certificate
+    - certFile: /cert/minimal.localhost.crt
+      keyFile: /cert/minimal.localhost.key
+
+    # second certificate
+#    - certFile: /path/to/other.cert
+#      keyFile: /path/to/other.key
+
+  # Add certificate stores
+  stores:
+    default:
+      defaultCertificate:
+        certFile: /cert/minimal.localhost.crt
+        keyFile: /cert/minimal.localhost.key

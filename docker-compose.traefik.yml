@@ -1,0 +1,68 @@
+version: "3.9"
+networks:
+  proxy:
+    name: proxy
+
+services:
+  # Responsible service for creating and updating automatically the SSL certificates
+  minion-cert:
+    build:
+      context: .
+      dockerfile: .docker/minion-cert/Dockerfile
+    user: "${UID}:${GID}"
+    volumes:
+      - .docker/traefik/cert/:/traefik/cert/              # Map dev cert folder for creation
+      - .docker/traefik/config/:/traefik/config/          # Map conf folder for setting up the initial config
+      - .install/:/traefik/install/                       # Map rootCa for easy project setup
+    command:
+      #      - "sh -c 'chmod ug+x certificates.sh'"
+      - "./certificates.sh"
+
+  traefik:
+    image: traefik:v2.10
+    labels:
+      # Dashboard
+      - "traefik.enable=true"
+      - "traefik.http.routers.api.rule=Host(`traefik.minimal.localhost`)"
+      - "traefik.http.routers.api.service=api@internal"
+      - "traefik.http.routers.traefik_https.entrypoints=websecure"
+      - "traefik.http.routers.traefik_https.tls=true"
+    #      - "traefik.http.routers.api.middlewares=auth"
+    command:
+      # Use Traeffik's dynamic configuration
+      - "--api.insecure=true"
+      - "--providers.docker"
+      - "--providers.docker.exposedByDefault=false"
+      - "--log.level=DEBUG"
+      - "--log.filePath=/logs/traefik.log"
+      # ----------------------------
+      # Additional Entry points
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.mysql.address=:3306"
+      - "--entrypoints.xdebug.address=:9003"      # Just needs to be set for xdebug
+      - "--entrypoints.redisep.address=:6379"
+      # ----------------------------
+      # Configure TLS
+      - "--providers.file.directory=/configuration/"
+      - "--providers.file.watch=true"
+      # ----------------------------
+      # For dynamic / automatic Certificate management
+      # https://traefik.io/blog/traefik-2-tls-101-23b4fbee81f1/
+    depends_on:
+      minion-cert:
+        condition: service_completed_successfully # Guarantees the Traefik config and certificates were created
+    ports:
+      - "80:80"     # HTTP
+      - "443:443"   # HTTPS
+      - "8080:8080" # Mailhog
+      - "3306:3306" # Mysql/Mariadb
+      - "6379:6379" # Redis
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro  # Manage Docker
+      - ./.logs/:/logs/                               # Map logs
+      - .docker/traefik/cert/:/cert/                  # Map dev certs
+      - .docker/traefik/config/:/configuration/       # Map config (user for certs)
+    networks:
+      - proxy
+

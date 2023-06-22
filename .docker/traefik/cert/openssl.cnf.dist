@@ -1,0 +1,13 @@
+# Extensions to add to a certificate request
+# For more information about the cert singing configuration consult:
+# https://superuser.com/questions/738612/openssl-ca-keyusage-extension
+basicConstraints       = critical, CA:FALSE
+subjectKeyIdentifier   = hash
+authorityKeyIdentifier = keyid:always
+keyUsage               = critical, nonRepudiation, digitalSignature, keyEncipherment, dataEncipherment
+subjectAltName         = @alt_names
+[ alt_names ]
+DNS.1 = minimal.localhost
+DNS.2 = *.minimal.localhost
+DNS.3 = minimal.loc
+DNS.4 = *.minimal.loc
