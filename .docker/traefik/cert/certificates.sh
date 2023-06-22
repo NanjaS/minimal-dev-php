@@ -6,9 +6,12 @@
 # Author: Steve Shreeve <steve.shreeve@gmail.com>
 #   Date: Dec 17, 2022
 # =============================================================================
+# Original Source can be found at: https://gist.github.com/shreeve/3358901a26a21d4ddee0e1342be7749d
 
-# Use https://gist.github.com/shreeve/3358901a26a21d4ddee0e1342be7749d
+# More sources
 # See https://gist.github.com/fntlnz/cf14feb5a46b2eda428e000157447309
+
+# Adjustments: Some certificate steps are optional so existing self signed certificates can be used
 
 # variables
 name="Kaapiii Minimal Dev."
