@@ -1,18 +1,16 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+//require_once '../src/NanjaS/Car.php';
 
-$test = true;
+require_once __DIR__ . '/../src/NanjaS/Car/Car.php';
+require_once __DIR__ . '/../src/NanjaS/Car/Pickup.php';
 
-$request = $_SERVER;
+$car = new \NanjaS\Car\Car(4,'red');
+var_dump($car->getValues());
 
-$auto = new \stdClass();
-$auto->test = "halle";
+echo PHP_EOL;
 
-for ($i = 0; $i < 100; $i++) {
-    $test = $i * 2;
-}
-
-
-xdebug_info();
-//phpinfo();
+$pickup = new \NanjaS\Car\Pickup(4);
+$pickup->setLoad(2000);
+$pickup->setColor('blue');
+var_dump($pickup->getValues());
