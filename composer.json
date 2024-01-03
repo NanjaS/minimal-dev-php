@@ -1,0 +1,14 @@
+{
+    "name": "nanja/test",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "NanjaS\\": "src/NanjaS",
+            "App\\": "src/App"
+        }
+    },
+    "require": {
+        "filp/whoops": "^2.15",
+        "payrexx/payrexx": "^1.8"
+    }
+}
