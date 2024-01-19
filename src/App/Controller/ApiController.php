@@ -19,7 +19,7 @@ class ApiController
 
         // $instanceName is a part of the url where you access your payrexx installation.
         // https://{$instanceName}.payrexx.com
-        $instanceName = 'YOUR_INSTANCE_NAME';
+        $instanceName = 'demo';
 
         // $secret is the payrexx secret for the communication between the applications
         // if you think someone got your secret, just regenerate it in the payrexx administration
