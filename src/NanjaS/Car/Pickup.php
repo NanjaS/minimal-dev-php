@@ -2,9 +2,9 @@
 
 namespace NanjaS\Car;
 
-use NanjaS\Car\Car;
+use NanjaS\Car\Vehicle;
 
-class Pickup extends Car
+class Pickup extends Vehicle
 {
     private int $load = 1000;
 

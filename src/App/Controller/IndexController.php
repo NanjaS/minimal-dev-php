@@ -13,14 +13,10 @@ class IndexController
         var_dump($pickup->getValues());
     }
 
-    public function showBike() {
+    public function showBike(string $color): Bike {
         //neue Objekt erstellen mit den Pfad zu Bike.php
-        $bike = new \NanjaS\Car\Bike(2, 'black', 'Kawasaki');
-        $bike->setWheels(2);
-        $bike->setColor('black');
-        $bike->setBrand('Kawasaki');
-//        $bike->setWheels(2);
-//        $bike->setColor('black');
-
+        $bike = new Bike(2);
+        $bike->setColor($color);
+        return $bike;
     }
 }

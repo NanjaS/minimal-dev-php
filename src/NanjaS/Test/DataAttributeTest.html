@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+</head>
+<body>
+    <div id="test" data-test='{
+    "animal": "butterfly",
+    "color": "blue"
+    }'>
+        <h1>Butterfly</h1>
+    </div>
+</body>
+<script>
+    const test = JSON.parse(document.querySelector('#test').dataset.test);
+    console.log(test.animal)
+</script>
+</html>

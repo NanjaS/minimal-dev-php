@@ -2,7 +2,7 @@
 
 namespace NanjaS\Car;
 
-class Car
+class Vehicle
 {
 
     public function __construct(

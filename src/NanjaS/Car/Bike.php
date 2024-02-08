@@ -2,24 +2,10 @@
 
 namespace NanjaS\Car;
 
-class Bike
+class Bike extends Vehicle
 {
-
-    public function __construct(
-        public $wheels,
-        public $color,
-        public $brand
-    )
-    {
-//        $this->wheels = $wheels;
-//        $this->color = 'black';
-//        var_dump($wheels);
-    }
     public function getWheels() : int {
         return $this->wheels;
-    }
-    public function setWheels(int $wheels) : void {
-        $this->wheels = $wheels;
     }
     public function setColor(string $color) : void {
         $this->color = $color;

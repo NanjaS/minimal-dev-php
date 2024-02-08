@@ -9,10 +9,16 @@ $whoops = new \Whoops\Run;
 $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 $whoops->register();
 
+$indexController = new IndexController();
+$bike = $indexController->showBike('purple');
+var_dump($bike);
+echo 'color: ' . $bike->getColor();
+
+var_dump(ini_get('error_reporting'));
+
 
 // .../car/vm/polo?color=blue&wheels=4
-$indexController = new IndexController();
-$indexController->showBike();
+
 // .../car
 // .../test
 //$requestPath = $_SERVER['REQUEST_URI'];
