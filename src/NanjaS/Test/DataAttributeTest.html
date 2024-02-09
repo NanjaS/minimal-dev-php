@@ -10,10 +10,15 @@
     "color": "blue"
     }'>
         <h1>Butterfly</h1>
+        <button id="button">Butterfly Information</button>
     </div>
 </body>
 <script>
-    const test = JSON.parse(document.querySelector('#test').dataset.test);
-    console.log(test.animal)
+    let btn = document.getElementById('button');
+    btn.addEventListener('click', function (event) {
+        const test = JSON.parse(document.querySelector('#test').dataset.test);
+        console.log(test.color)
+    })
+
 </script>
 </html>
