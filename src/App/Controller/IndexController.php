@@ -2,21 +2,30 @@
 
 namespace App\Controller;
 use NanjaS\Car\Bike;
+use Twig\Environment;
 
 class IndexController
 {
+
+    public function __construct(
+        private readonly Environment $twig
+    )
+    {
+
+    }
     public function index()
     {
-        $pickup = new \NanjaS\Car\Pickup(4);
-        $pickup->setLoad(2000);
-        $pickup->setColor('blue');
-        var_dump($pickup->getValues());
-    }
+        echo $this->twig->render('html/index.html',
+            [
+                'name' => 'Fabien',
+                'colors' => [
+                    'blue',
+                    'green',
+                    'red',
+                    'lemon'
+                ]
+            ]
+        );
 
-    public function showBike(string $color): Bike {
-        //neue Objekt erstellen mit den Pfad zu Bike.php
-        $bike = new Bike(2);
-        $bike->setColor($color);
-        return $bike;
     }
 }
