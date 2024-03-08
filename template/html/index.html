@@ -3,34 +3,235 @@
 <head>
     <meta charset="UTF-8">
     <title>Form</title>
-    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="/template/css/main.css">
 </head>
 <body>
     <header>
         <div>
-            <img src="../img/logo.png" alt="Logo" id="logo">
-        </div>
+            <div>
+                <img src="/template/img/logo.png" alt="Logo" id="logo">
+            </div>
 
-        <div class="navBar">
-            <span>Home</span>
-            <span>Features</span>
-            <span>Pricing</span>
-            <span>FAQs</span>
-            <span>About</span>
-        </div>
-        <div class="userAccount">
-            <span> <button>Login</button> </span>
-            <span> <button>Sign Up</button> </span>
+            <div class="menuBar">
+                <span>Home</span>
+                <span>Features</span>
+                <span>Pricing</span>
+                <span>FAQs</span>
+                <span>About</span>
+            </div>
+
+            <div class="userAccount">
+                <span> <button id="logIn">Login</button> </span>
+                <span> <button id="signUp">Sign Up</button> </span>
+            </div>
         </div>
         <hr>
     </header>
 
     <main>
+        <div class="main-title">
+            <img src="/template/img/logo.png" alt="Logo" id="main-logo">
+            <h1>Checkout Form</h1>
+        </div>
 
+        <form name="checkoutForm">
+            <div id="checkout">
+<!--                user cart-->
+                <div class="user-cart">
+                    <h2>
+                        <span>Your Cart</span>
+                        <span id="selected-products">3</span>
+                    </h2>
+
+                    <div class="products">
+                        <ul class="products-list">
+                            <li class="list-item">
+                                <div>
+                                    <p class="product-name title">Product name</p>
+                                    <small>Brief description</small>
+                                </div>
+                                <div>
+                                    <span class="price">$12</span>
+                                </div>
+                            </li>
+
+                            <li class="list-item">
+                                <div>
+                                    <p class="product-name title">Second product</p>
+                                    <small>Brief description</small>
+                                </div>
+                                <div>
+                                    <span class="price">$8</span>
+                                </div>
+                            </li>
+
+                            <li class="list-item">
+                                <div>
+                                    <p class="product-name title">Third item</p>
+                                    <small>Brief description</small>
+                                </div>
+                                <div>
+                                    <span class="price">$5</span>
+                                </div>
+                            </li>
+
+                            <li class="list-item promo-code">
+                                <div>
+                                    <p class="title">Promo code</p>
+                                    <small>EXAMPLECODE</small>
+                                </div>
+                                <div>
+                                    <span class="price">-$5</span>
+                                </div>
+                            </li>
+
+                            <li class="list-item">
+                                <div>
+                                    <span class="title">Total (USD)</span>
+                                </div>
+                                <div>
+                                    <strong class="price">$20</strong>
+                                </div>
+                            </li>
+                        </ul>
+                        <form name="promo-code">
+                            <div id="promo-code">
+                                <div>
+                                    <input type="text" placeholder="Promo code">
+                                </div>
+                                <div>
+                                    <button type="submit">Redeem</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+<!--                billing address-->
+                <div class="payment-and-bill">
+                    <div class="billing-address">
+                        <h2>Billing address</h2>
+                        <div>
+                            <label>First Name</label>
+                            <input type="text" id="first_name">
+                            <label>Last Name</label>
+                            <input type="text" id="last_name">
+                        </div>
+                        <div>
+                            <label>Username</label>
+                            <input type="text" id="username" placeholder="Username">
+                        </div>
+                        <div>
+                            <label>Email <span>(Optional)</span></label>
+                            <input type="text" id="email" placeholder="you@example.com">
+                        </div>
+                        <!--                    Address-->
+                        <div>
+                            <label>Address</label>
+                            <input type="text" id="address" placeholder="1234 Main St">
+                        </div>
+                        <div>
+                            <label>Address 2 <span>(Optional)</span></label>
+                            <input type="text" id="address2" placeholder="Apartment or Suite">
+                        </div>
+                        <!--                    Country-->
+                        <div>
+                            <label for="country">Country</label>
+                            <select name="country" id="country">
+                                <option value="choose">Choose...</option>
+                                <option value="usa">United State</option>
+                            </select>
+                        </div>
+                        <!--                    State-->
+                        <div>
+                            <label for="state">State</label>
+                            <select name="state" id="state">
+                                <option value="choose">Choose...</option>
+                                <option value="california">California</option>
+                            </select>
+                        </div>
+                        <!--                    Zip-->
+                        <div>
+                            <label>Zip</label>
+                            <input type="text" id="zip">
+                        </div>
+                    </div>
+                    <hr class="parting-line">
+                    <!--                check-box-->
+                    <div class="form-checkbox">
+                        <input type="checkbox">
+                        <label id="same-address">Shipping address is the same as my billing address</label>
+                    </div>
+
+                    <div class="form-checkbox">
+                        <input type="checkbox">
+                        <label id="save-info">Save this information for next time</label>
+                    </div>
+                    <hr class="parting-line">
+                    <!--                payment-->
+                    <div class="payment">
+                        <h2>Payment</h2>
+                        <!--                    payment methods-->
+                        <div class="payment-methods">
+                            <div>
+                                <input type="radio" name="paymentMethod" id="creditcard">
+                                <label>Credit card</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="paymentMethod" id="debitcard">
+                                <label>Debit card</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="paymentMethod" id="paypal">
+                                <label>Paypal</label>
+                            </div>
+                        </div>
+
+                        <div class="card-info">
+                            <div>
+                                <label for="card-name" class="card-info-label">Name on Card</label>
+                                <input type="text" id="card-name">
+                                <small>Full name as displayed on card</small>
+                            </div>
+
+                            <div>
+                                <label for="card-number" class="card-info-label">Card number</label>
+                                <input type="text" id="card-number">
+                            </div>
+
+                            <div>
+                                <label for="expiration" class="card-info-label">Expiration</label>
+                                <input type="text" id="expiration">
+                            </div>
+
+                            <div>
+                                <label for="cvv" class="card-info-label">CVV</label>
+                                <input type="text" id="cvv">
+                            </div>
+                        </div>
+                        <hr class="parting-line">
+                    </div>
+                </div>
+            </div>
+            <div class="checkout-button">
+                <button type="submit">Continue to checkout</button>
+            </div>
+        </form>
     </main>
 
+<!--    footer-->
     <footer>
-
+<!--        <div>-->
+            <div class="footerBar">
+                <span>Home</span>
+                <span>Features</span>
+                <span>Pricing</span>
+                <span>FAQs</span>
+                <span>About</span>
+            </div>
+<!--        </div>-->
+        <hr>
+        <p id="text">&copy; 2024 Company Inc.</p>
     </footer>
 </body>
 </html>

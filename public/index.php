@@ -25,8 +25,6 @@ $twig = new Environment($loader, [
 // .../test
 $requestPath = $_SERVER['REQUEST_URI'];
 
-var_dump($requestPath);
-
 if ($requestPath === '/') {
     $indexController = new IndexController($twig);
     $indexController->index();

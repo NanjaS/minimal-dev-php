@@ -1,8 +1,133 @@
 html {
     height: 100%;
 }
-
+body {
+    height: 100%;
+    margin: 0;
+}
+header, footer {
+    font-size: 20px;
+    padding: 20px;
+    background-color: black;
+    color: white;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+header > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.menuBar, .userAccount {
+    display: flex;
+    align-items: center;
+}
+.menuBar > span, .footerBar > span {
+    padding-left: 20px;
+}
+.userAccount > span {
+    margin-left: 5px;
+}
+button {
+    padding: 10px;
+    border: white;
+    border-radius: 5px;
+}
+#logIn {
+    background-color: black;
+    color: white;
+    border: solid white 1px;
+}
+#logIn:hover {
+    color: black;
+    background-color: white;
+    cursor: pointer;
+}
+#signUp {
+    background-color: #ffc107;
+}
+#signUp:hover {
+    background-color: #f6d163;
+    cursor: pointer;
+}
 #logo {
+    border-radius: 5px;
     width: 60px;
     height: 60px;
+}
+#main-logo {
+    border-radius: 10px;
+    width: 80px;
+    height: 80px;
+}
+/*Footer*/
+.footerBar, #text {
+    display: flex;
+    justify-content: center;
+}
+.footerBar {
+    margin-bottom: 20px;
+}
+
+main {
+    margin: 100px 150px 100px 150px;
+}
+hr.parting-line {
+    margin-right: 200px;
+}
+.main-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+/*style for user cart*/
+.user-cart {
+    width: 33.3333333333%;
+}
+ul.products-list, #promo-code {
+    padding: 10px;
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+div#promo-code {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+input[type="text"], select {
+    height: 30px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+span#selected-products {
+    margin-right: 50px;
+    padding: 10px;
+    border-radius: 50%;
+    background-color: #ffc107;
+}
+div.products >ul.products-list >li {
+    /*width: 10%;*/
+    border-bottom: 1px solid black;
+    list-style-type: none;
+    margin: 0 0 10px 0;
+}
+.list-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.product-name, .title {
+    margin: 0;
+}
+.promo-code {
+    color: lightgreen;
+}
+/*style for billing address*/
+.payment-and-bill {
+    margin-right: 50px;
+    width: 66.6666666667%;
+}
+#checkout {
+    display: flex;
+    flex-direction: row-reverse;
 }
