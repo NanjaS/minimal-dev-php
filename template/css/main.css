@@ -7,7 +7,10 @@ body {
     margin: 0;
 }
 main {
-    margin: 5% 25% 5% 25%;
+    padding: 50px 150px 50px 150px;
+    margin: 5% 15% 5% 15%;
+    box-shadow: 0 0 100px 50px lightgrey;
+    border-radius: 5px;
 }
 .main-title {
     display: flex;
@@ -18,49 +21,45 @@ main {
 /*style for billing address and payment*/
 .payment-and-bill {
     margin-right: 10%;
-    width: 66.6666666667%;
+    width: 100%;
 }
 input[type="text"], select {
-    background-color: #d3d3d3;
+    background-color: #f0f0f0;
     display: block;
-    /*width: 50%;*/
     height: 30px;
     border: 1px solid black;
     border-radius: 5px;
     margin-top: 10px;
 }
-#checkout {
+#checkoutForm {
     display: flex;
     flex-direction: row-reverse;
+    padding: 20px 40px 50px 40px;
+    border: 2px solid black;
+    border-radius: 5px;
 }
 /*---------------------------------------------------------------------------------*/
-.first-block, .fourth-block {
+.first-block, .fourth-block, .card {
     display: flex;
     flex-direction: row;
 }
-.first-div-element, .second-div-element, .third-div-element, .fourth-div-element {
+.first-container, .second-container, .third-container, .fourth-container {
     margin-bottom: 10px;
 }
-.first-div-element:first-child, .select-element {
+.first-container:first-child, .select-element {
     margin-right: 20px;
 }
 
 /*---------------------------------------------------------------------------------*/
-/*first and last name (first-div-element)*/
-.first-div-element, .fields{
+/*first and last name (first-container)*/
+.first-container, .fields {
     width: 100%;
 }
-/*---------------------------------------------------------------------------------*/
-/*username and email (second-div-element)*/
-/*---------------------------------------------------------------------------------*/
-/*address and address 2 (third-div-element)*/
-/*---------------------------------------------------------------------------------*/
-
-/*country, state and zip (fourth-div-element)*/
+/*country, state and zip (fourth-container)*/
 select {
     height: 35px;
 }
-.fourth-div-element {
+.fourth-container {
     width: 33.33333333333333333333%;
 }
 
@@ -70,26 +69,30 @@ select {
     margin: 20px 0 20px 0;
 }
 input[type="text"]:focus {
-    box-shadow: 0 0 5px 1px #D3D3D3;
+    box-shadow: 0 0 6px 2px #D3D3D3;
 }
-input#checkbox-1 {
+input#checkbox-1, .radiobuttons {
     margin-bottom: 6px;
 }
 /*---------------------------------------------------------------------------------*/
 /*checkout button*/
+.checkout-button {
+    margin-top: 10px;
+    height: 30px;
+}
+button#checkoutBtn {
+    font-size: 20px;
+    width: 100%;
+}
+.mainButton:hover {
+    background-color: black;
+    color: white;
+}
 /*---------------------------------------------------------------------------------*/
 /*payment*/
-.radiobuttons {
-    margin-bottom: 6px;
-}
-.card {
-    /*width: 100%;*/
-    display: flex;
-    flex-direction: row;
-}
-.first-column {
-    margin-right: 10px;
-}
 input#cvv, input#expiration {
     width: 80%;
+}
+.numbers {
+    margin-bottom: 20px;
 }

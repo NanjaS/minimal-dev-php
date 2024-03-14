@@ -3,11 +3,9 @@ header, footer {
     padding: 20px;
     background-color: black;
     color: white;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
 }
 header > div {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
 }
 .menuBar, .userAccount {
