@@ -7,9 +7,9 @@ body {
     margin: 0;
 }
 main {
-    padding: 50px 150px 50px 150px;
-    margin: 5% 15% 5% 15%;
-    box-shadow: 0 0 100px 50px lightgrey;
+    padding: 1% 5% 1% 5%;
+    margin: 5% 12% 5% 12%;
+    box-shadow: 0 0 70px 50px lightgrey;
     border-radius: 5px;
 }
 .main-title {
@@ -72,7 +72,7 @@ input[type="text"]:focus {
     box-shadow: 0 0 6px 2px #D3D3D3;
 }
 input#checkbox-1, .radiobuttons {
-    margin-bottom: 6px;
+    margin-bottom: 8px;
 }
 /*---------------------------------------------------------------------------------*/
 /*checkout button*/

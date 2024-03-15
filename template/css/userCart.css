@@ -1,3 +1,6 @@
+.user-cart {
+    width: 100%;
+}
 ul.products-list, #promo-code {
     padding: 10px;
     border: 1px solid black;
