@@ -1,0 +1,16 @@
+@media screen and (min-width: 280px) and (max-width: 700px) {
+    h1#heading {
+        font-size: 30px;
+    }
+    .all-products {
+        margin: 0;
+        width: 100%;
+    }
+    .products-in-cart {
+        display: flex;
+        flex-direction: column;
+    }
+    .products-detail > img {
+        width: 90%;
+    }
+}
