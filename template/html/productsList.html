@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
-<!--------------------------------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------->
 <body>
     <header>
         <div>
@@ -32,15 +32,121 @@
         </div>
         <hr>
     </header>
-<!--------------------------------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------->
+
+<!----  search bar (to find products) --------------------------------------------------------------------------------->
     <main>
-        <div class="search-bar">
-            <i class="fa fa-search"></i>
-            <input type="text" class="search" placeholder="I'm looking for....">
-            <button class="searchBtn">Search</button>
+        <h1 id="heading">Products</h1>
+        <div class="search">
+            <div class="search-bar">
+                <i class="fa fa-search"></i>
+                <input type="text" id="search" placeholder="I'm looking for....">
+                <button class="searchBtn">Search</button>
+            </div>
+        </div>
+<!----- Liste von Produkte -------------------------------------------------------------------------------------------->
+        <div class="all-products">
+            <div class="products-in-cart">
+<!--                image-->
+                <div class="products-detail">
+                    <img src="/template/img/black.png" alt="Product's Image">
+                </div>
+<!--                product details-->
+                <div class="products-detail">
+                    <h4>Product 1</h4>
+                    <small>Type of Product</small>
+                    <p>Product Information</p>
+                    <input type="number" name="quantity" class="quantity" value="3">
+                    <div>
+                        <span>CHF</span>
+                        <span>100.00</span>
+                    </div>
+                </div>
+                <hr>
+                <div class="products-detail">
+<!--                    price-->
+                    <div>
+                        <span>CHF</span>
+                        <span>300.00</span>
+                        <p class="shipping">Free Shipping</p>
+                    </div>
+<!--                    options-->
+                    <div class="options">
+                        <button class="btn edit">Edit</button>
+                        <button class="hidden">Save</button>
+                        <button class="btn delete">Delete</button>
+                    </div>
+                </div>
+            </div>
+<!------------------------------------------------------------------->
+            <div class="products-in-cart">
+                <!--                image-->
+                <div class="products-detail">
+                    <img src="/template/img/black.png" alt="Product's Image">
+                </div>
+                <!--                product details-->
+                <div class="products-detail">
+                    <h4>Product 1</h4>
+                    <small>Type of Product</small>
+                    <p>Product Information</p>
+                    <input type="number" name="quantity" class="quantity" value="2">
+                    <div>
+                        <span>CHF</span>
+                        <span>50.00</span>
+                    </div>
+                </div>
+                <hr>
+                <div class="products-detail">
+                    <!--                    price-->
+                    <div>
+                        <span>CHF</span>
+                        <span>100.00</span>
+                        <p class="shipping">Free Shipping</p>
+                    </div>
+                    <!--                    options-->
+                    <div class="options">
+                        <button class="btn edit">Edit</button>
+                        <button class="hidden">Save</button>
+                        <button class="btn delete">Delete</button>
+                    </div>
+                </div>
+            </div>
+<!------------------------------------------------------------------->
+            <div class="products-in-cart">
+                <!--                image-->
+                <div class="products-detail">
+                    <img src="/template/img/black.png" alt="Product's Image">
+                </div>
+                <!--                product details-->
+                <div class="products-detail">
+                    <h4>Product 1</h4>
+                    <small>Type of Product</small>
+                    <p>Product Information</p>
+                    <input type="number" name="quantity" class="quantity" value="4">
+                    <div>
+                        <span>CHF</span>
+                        <span>20.00</span>
+                    </div>
+                </div>
+                <hr>
+                <div class="products-detail">
+                    <!--                    price-->
+                    <div>
+                        <span>CHF</span>
+                        <span>80.00</span>
+                        <p class="shipping">Free Shipping</p>
+                    </div>
+                    <!--                    options-->
+                    <div class="options">
+                        <button class="btn edit">Edit</button>
+                        <button class="hidden">Save</button>
+                        <button class="btn delete">Delete</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
-<!--------------------------------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------->
     <footer>
         <div class="footerBar">
             <span>Home</span>
