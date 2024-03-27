@@ -26,7 +26,8 @@ div.products >ul.products-list >li {
     margin: 0;
 }
 .promo-code {
-    color: lightgreen;
+    color: green;
+    font-weight: bold;
 }
 /*redeem button*/
 #redeemBtn {

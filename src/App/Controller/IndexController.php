@@ -15,16 +15,17 @@ class IndexController
     }
     public function index()
     {
-        echo $this->twig->render('html/index.html',
-            [
-                'name' => 'Fabien',
-                'colors' => [
-                    'blue',
-                    'green',
-                    'red',
-                    'lemon'
-                ]
-            ]
+        echo $this->twig->render('index.html'
+//        ,
+//            [
+//                'name' => 'Lucien',
+//                'colors' => [
+//                    'blue',
+//                    'green',
+//                    'red',
+//                    'lemon'
+//                ]
+//            ]
         );
 
     }

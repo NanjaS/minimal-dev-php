@@ -9,7 +9,7 @@ body {
 main {
     padding: 1% 5% 1% 5%;
     margin: 5% 12% 5% 12%;
-    box-shadow: 0 0 70px 50px lightgrey;
+    box-shadow: 0 0 50px 30px lightgrey;
     border-radius: 5px;
 }
 .main-title {
@@ -24,7 +24,6 @@ main {
     width: 100%;
 }
 input[type="text"], select {
-    background-color: #f0f0f0;
     display: block;
     height: 30px;
     border: 1px solid black;
@@ -35,7 +34,6 @@ input[type="text"], select {
     display: flex;
     flex-direction: row-reverse;
     padding: 20px 40px 50px 40px;
-    border: 2px solid black;
     border-radius: 5px;
 }
 /*---------------------------------------------------------------------------------*/
