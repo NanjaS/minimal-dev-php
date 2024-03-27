@@ -94,10 +94,6 @@ h4 {
     height: 25px;
     margin-bottom: 10px;
 }
-.shipping {
-    color: green;
-    font-weight: bold;
-}
 .all-products {
     width: 100%;
     display: flex;
@@ -111,4 +107,25 @@ h4 {
     margin: 15px;
     display: flex;
     flex-direction: row;
+}
+/*new products style (new template)*/
+button.information {
+    background-color: #ffc107;
+    width: 70%;
+    margin: 7px 0 15px 0;
+}
+select[name="products-categories"] {
+    border-radius: 5px;
+    margin: 7px 0 7px 0;
+    width: 70%;
+    height: 15%;
+    font-size: 15px;
+}
+input[type="number"] {
+    margin-left: 10px;
+    width: 30%;
+    height: 16px;
+}
+.price {
+    margin-bottom: 15px;
 }
