@@ -13,7 +13,7 @@ $whoops->register();
 
 
 //setup
-$loader = new FilesystemLoader(__DIR__ . '/../template/html');
+$loader = new FilesystemLoader(__DIR__ . '/../template/twig');
 $twig = new Environment($loader, [
     'cache' => __DIR__ . '/../tmp/twig',
     'debug' => true,
