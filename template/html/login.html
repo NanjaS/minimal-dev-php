@@ -2,29 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log in</title>
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="../css/account.css">
 </head>
 <body>
     <main>
-        <form action="login.php" method="post">
+        <form method="post">
             <div>
                 <img src="/template/img/logo.png" alt="Logo" id="logo">
             </div>
             <h2>Sign in to your Account</h2>
-<!--            PHP-->
-            <?php if (isset($_GET['error'])) { ?>
-            <p class="error"><?php echo $_GET['error]; ?></p>
-            <?php } ?>
 
-            <div >
+            <div>
                 <div class="fields">
-                    <label for="email">Email</label>
-                    <input type="text" id="email" placeholder="yourname@example.com">
+                    <input type="text" id="email" placeholder="email">
                 </div>
                 <div class="fields">
-                    <label for="pwd">Password</label>
-                    <input type="text" id="pwd">
+                    <input type="text" id="pwd" placeholder="password">
                 </div>
                 <div>
                     <input type="checkbox" name="save" id="rememberMe">
