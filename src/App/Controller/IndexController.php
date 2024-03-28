@@ -15,18 +15,7 @@ class IndexController
     }
     public function index()
     {
-        echo $this->twig->render('index.html'
-//        ,
-//            [
-//                'name' => 'Lucien',
-//                'colors' => [
-//                    'blue',
-//                    'green',
-//                    'red',
-//                    'lemon'
-//                ]
-//            ]
+        echo $this->twig->render('index.twig'
         );
-
     }
 }
