@@ -1,0 +1,22 @@
+@media screen and (min-width: 701px) and (max-width: 1760px) {
+    .all-products {
+        margin: 0;
+        width: 100%;
+    }
+    .products-in-cart {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .products-detail > img {
+        width: 90%;
+    }
+
+/*    button*/
+    input#search {
+        width: 50%;
+    }
+    .searchBtn {
+        width: 80px;
+    }
+}

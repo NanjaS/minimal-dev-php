@@ -1,0 +1,64 @@
+header, footer {
+    font-size: 20px;
+    padding: 20px;
+    background-color: black;
+    color: white;
+}
+header > div {
+    display: flex;
+    justify-content: space-between;
+}
+.menuBar, .userAccount {
+    display: flex;
+    align-items: center;
+}
+.menuBar > span, .footerBar > span {
+    padding-left: 20px;
+}
+.userAccount > span {
+    margin-left: 5px;
+}
+button {
+    padding: 10px;
+    border: white;
+    border-radius: 5px;
+}
+#logIn {
+    background-color: black;
+    color: white;
+    border: solid white 1px;
+}
+#logIn:hover {
+    color: black;
+    background-color: white;
+    cursor: pointer;
+}
+#signUp {
+    background-color: #ffc107;
+}
+#signUp:hover {
+    background-color: #f6d163;
+    cursor: pointer;
+}
+#logo {
+    border-radius: 5px;
+    width: 60px;
+    height: 60px;
+}
+#main-logo {
+    border-radius: 10px;
+    width: 80px;
+    height: 80px;
+}
+/*hamburger menu*/
+.hamburgerMenu {
+    display: none;
+}
+/*Footer*/
+.footerBar, #text {
+    display: flex;
+    justify-content: center;
+}
+.footerBar {
+    margin-bottom: 20px;
+}

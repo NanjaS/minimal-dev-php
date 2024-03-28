@@ -1,0 +1,96 @@
+html {
+    font-family: 'Roboto', sans-serif;
+    height: 100%;
+}
+body {
+    height: 100%;
+    margin: 0;
+}
+main {
+    padding: 1% 5% 1% 5%;
+    margin: 5% 12% 5% 12%;
+    box-shadow: 0 0 50px 30px lightgrey;
+    border-radius: 5px;
+}
+.main-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+/*---------------------------------------------------------------------------------*/
+/*style for billing address and payment*/
+.payment-and-bill {
+    margin-right: 10%;
+    width: 100%;
+}
+input[type="text"], select {
+    display: block;
+    height: 30px;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+#checkoutForm {
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 20px 40px 50px 40px;
+    border-radius: 5px;
+}
+/*---------------------------------------------------------------------------------*/
+.first-block, .fourth-block, .card {
+    display: flex;
+    flex-direction: row;
+}
+.first-container, .second-container, .third-container, .fourth-container {
+    margin-bottom: 10px;
+}
+.first-container:first-child, .select-element {
+    margin-right: 20px;
+}
+
+/*---------------------------------------------------------------------------------*/
+/*first and last name (first-container)*/
+.first-container, .fields {
+    width: 100%;
+}
+/*country, state and zip (fourth-container)*/
+select {
+    height: 35px;
+}
+.fourth-container {
+    width: 33.33333333333333333333%;
+}
+
+/*---------------------------------------------------------------------------------*/
+/*style for checkboxes*/
+.checkboxes {
+    margin: 20px 0 20px 0;
+}
+input[type="text"]:focus {
+    box-shadow: 0 0 6px 2px #D3D3D3;
+}
+input#checkbox-1, .radiobuttons {
+    margin-bottom: 8px;
+}
+/*---------------------------------------------------------------------------------*/
+/*checkout button*/
+.checkout-button {
+    margin-top: 10px;
+    height: 30px;
+}
+button#checkoutBtn {
+    font-size: 20px;
+    width: 100%;
+}
+.mainButton:hover {
+    background-color: black;
+    color: white;
+}
+/*---------------------------------------------------------------------------------*/
+/*payment*/
+input#cvv, input#expiration {
+    width: 80%;
+}
+.numbers {
+    margin-bottom: 20px;
+}

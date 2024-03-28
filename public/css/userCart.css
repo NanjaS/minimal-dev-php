@@ -1,0 +1,39 @@
+.user-cart {
+    width: 100%;
+}
+ul.products-list, #promo-code {
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+/*title*/
+span#selected-products {
+    margin-left: 10%;
+    padding: 6px;
+    border-radius: 5px;
+    background-color: #ffc107;
+}
+div.products >ul.products-list >li {
+    border-bottom: 1px solid black;
+    margin: 0 0 10px 0;
+}
+.list-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.product-name, .title {
+    margin: 0;
+}
+.promo-code {
+    color: green;
+    font-weight: bold;
+}
+/*redeem button*/
+#redeemBtn {
+    margin-top: 10px;
+}
+div#promo-code > div {
+    display: flex;
+    justify-content: space-between;
+}

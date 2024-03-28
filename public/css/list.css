@@ -1,0 +1,131 @@
+html {
+    font-family: 'Roboto', sans-serif;
+    height: 100%;
+}
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+main {
+    width: 100%;
+    margin: 20px 0 20px 0;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+i {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+input[type="number"]:focus {
+    box-shadow: 0 0 10px 3px lightgrey;
+}
+h1#heading {
+    font-size: 40px;
+    margin: 0;
+}
+/*---------------------------------------------------------------------------------*/
+/*icon*/
+i.fa-search {
+    font-size: 25px;
+    margin: 5px 5px 5px 5px;
+}
+/*search bar*/
+.search, #heading, main {
+    display: flex;
+    justify-content: center;
+}
+i.fa-search {
+    margin-left: 20px;
+}
+.search-bar {
+    width: 45%;
+    position: relative;
+    box-shadow: 0 0 30px 20px lightgrey;
+    padding: 20px;
+    margin: 4% 2% 4% 2%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+input#search {
+    border-radius: 5px;
+    height: 60px;
+    width: 80%;
+}
+.searchBtn {
+    height: 60px;
+    width: 100px;
+    background-color: #ffc107;
+}
+/*---------------------------------------------------------------------------------*/
+
+.hidden {
+    display: none;
+}
+.btn {
+    cursor: pointer;
+    width: 200px;
+    margin-bottom: 10px;
+}
+.delete {
+    background-color: darkred;
+    color: white;
+}
+.delete:hover {
+    background-color: #c50101;
+}
+.edit {
+    background-color: darkgreen;
+    color: white;
+}
+.edit:hover {
+    background-color: green;
+}
+h4 {
+    margin: 0;
+}
+.products-detail {
+    margin: 10px 20px;
+}
+.quantity {
+    height: 25px;
+    margin-bottom: 10px;
+}
+.all-products {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.products-in-cart {
+    width: 45%;
+    box-shadow: 0 0 30px 15px lightgrey;
+    padding: 15px;
+    margin: 15px;
+    display: flex;
+    flex-direction: row;
+}
+/*new products style (new template)*/
+button.information {
+    background-color: #ffc107;
+    width: 70%;
+    margin: 7px 0 15px 0;
+}
+select[name="products-categories"] {
+    border-radius: 5px;
+    margin: 7px 0 7px 0;
+    width: 70%;
+    height: 15%;
+    font-size: 15px;
+}
+input[type="number"] {
+    margin-left: 10px;
+    width: 30%;
+    height: 16px;
+}
+.price {
+    margin-bottom: 15px;
+}
