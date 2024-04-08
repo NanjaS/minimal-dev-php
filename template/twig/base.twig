@@ -4,10 +4,18 @@
     {% block head %}
         <meta charset="UTF-8">
         <title>{% block title %}Base Template{% endblock %}</title>
+{#        <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#        <link rel="stylesheet" href="/template/css/footerHeader.css">#}
+{#        <link rel="stylesheet" href="/template/mediaScreen/index_widescreen.css">#}
+{#        <link rel="stylesheet" href="/template/mediaScreen/index_smallscreen.css">#}
+{#        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">#}
+
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="/css/footerHeader.css">
+        <link rel="stylesheet" href="/css/userCart.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/template/css/footerHeader.css">
-        <link rel="stylesheet" href="/template/mediaScreen/index_widescreen.css">
-        <link rel="stylesheet" href="/template/mediaScreen/index_smallscreen.css">
+        <link rel="stylesheet" href="/mediaScreen/index_widescreen.css">
+        <link rel="stylesheet" href="/mediaScreen/index_smallscreen.css">
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     {% endblock %}
 </head>
@@ -16,7 +24,7 @@
         {% block header %}
             <div class="nav-container">
                 <div>
-                    <img src="/template/img/logo.png" alt="Logo" id="logo">
+                    <img src="/img/logo.png" alt="Logo" id="logo">
                 </div>
                 <div class="hamburgerMenu">
                     <span class="line" id="line1"></span>
