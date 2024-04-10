@@ -5,18 +5,11 @@
         <meta charset="UTF-8">
         <title>{% block title %}{% endblock %}</title>
 
-        <link rel="stylesheet" href="/css/main.css">
-        <link rel="stylesheet" href="/css/footerHeader.css">
-        <link rel="stylesheet" href="/css/userCart.css">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/mediaScreen/index_widescreen.css">
-        <link rel="stylesheet" href="/mediaScreen/index_smallscreen.css">
+        {% block productsListStyle %}
+        {% endblock %}
 
-        <link rel="stylesheet" href="/css/list.css">
-        <link rel="stylesheet" href="/mediaScreen/list_widescreen.css">
-        <link rel="stylesheet" href="/mediaScreen/list_smallscreen.css">
-        <link rel="stylesheet" href="/mediaScreen/hamburgerMenu.css">
-        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        {% block indexStyle %}
+        {% endblock %}
     {% endblock %}
 </head>
 <body>

@@ -1,6 +1,16 @@
 {% extends "base.twig" %}
 
 {% block title %} Products {% endblock %}
+{% block productsListStyle %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/footerHeader.css">
+    <link rel="stylesheet" href="/css/list.css">
+    <link rel="stylesheet" href="/mediaScreen/list_widescreen.css">
+    <link rel="stylesheet" href="/mediaScreen/list_smallscreen.css">
+    <link rel="stylesheet" href="/mediaScreen/hamburgerMenu.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+{% endblock %}
 
     {% block content %}
         <h1 id="heading">Products</h1>
