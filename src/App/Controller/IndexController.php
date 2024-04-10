@@ -15,7 +15,6 @@ class IndexController
     }
     public function index()
     {
-        echo $this->twig->render('index.twig'
-        );
+        echo $this->twig->render('productsList.twig');
     }
 }
