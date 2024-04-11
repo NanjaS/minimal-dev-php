@@ -1,0 +1,61 @@
+main {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.product {
+    font-size: 20px;
+    width: 40%;
+}
+h1 {
+    display: flex;
+    justify-content: center;
+}
+.hidden {
+    display: none;
+}
+/*buttons*/
+.btn {
+    cursor: pointer;
+    width: 200px;
+    margin-bottom: 10px;
+}
+.delete {
+    background-color: darkred;
+    color: white;
+}
+.delete:hover {
+    background-color: #c50101;
+}
+.edit {
+    background-color: darkgreen;
+    color: white;
+}
+.edit:hover {
+    background-color: green;
+}
+.options {
+    display: flex;
+    justify-content: space-between;
+}
+/*images*/
+div.details > img {
+    width: 100%;
+    height: 100%;
+}
+/*categories and item*/
+.categoriesAndItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+/*shipping cost*/
+.shipping {
+    color: darkgreen;
+    font-weight: bold;
+}
+.shipping > p {
+    margin: 5px 0  5px 0;
+}
